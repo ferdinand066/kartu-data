@@ -1,4 +1,4 @@
-export type CardType = "all" | "romance" | "funny" | "future" | "memories"
+export type CardType = "all" | "deep-talk" | "romance" | "funny" | "future" | "memories"
 
 export interface CardModel {
   id: number
@@ -8,6 +8,7 @@ export interface CardModel {
 
 export interface CartTypeInformation {
   color: string
+  hoverColor: string
   image: string
   name: string
 }

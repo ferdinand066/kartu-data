@@ -4,12 +4,13 @@ import type { CardType } from '../types/card'
 import { Button } from './ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Menu } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const currentPath = location.pathname
-  
+
   // Determine current card type from URL
   const getCurrentCardType = (): CardType | undefined => {
     if (currentPath === '/') return undefined;
@@ -33,13 +34,21 @@ export function Navbar() {
   }
 
   return (
-    <nav className="border-b bg-white/80 backdrop-blur-enhanced sticky top-0 z-50">
+    <nav className="border-b bg-white/80 backdrop-blur-enhanced sticky top-0 z-50" role="navigation" aria-label="Navigasi Utama">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
-          <div 
-            className="flex items-center space-x-3 cursor-pointer"
+          <div
+            className="flex items-center gap-3 cursor-pointer"
             onClick={handleHomeClick}
+            role="button"
+            tabIndex={0}
+            aria-label="Kembali ke Beranda"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleHomeClick()
+              }
+            }}
           >
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">KD</span>
@@ -50,17 +59,18 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-2">
+          <div className="hidden md:flex gap-2" role="menubar">
             {Object.entries(cardInfo).map(([key, cardType]) => (
               <Button
                 key={key}
                 variant={currentCardType === key ? "default" : "outline"}
                 size="sm"
                 onClick={() => handleCardTypeChange(key as CardType)}
-                className={`${currentCardType === key
-                    ? cardType.color
-                    : "hover:bg-gray-100"
-                  } transition-all duration-200`}
+                className={cn(currentCardType === key ? cn(cardType.color, cardType.hoverColor) : "hover:bg-gray-100",
+                  "transition-all duration-200")}
+                role="menuitem"
+                aria-current={currentCardType === key ? "page" : undefined}
+                aria-label={`Buka kategori ${cardType.name}`}
               >
                 {cardType.name}
               </Button>
@@ -75,24 +85,27 @@ export function Navbar() {
                   variant="ghost"
                   size="sm"
                   className="p-2"
-                  aria-label="Toggle mobile menu"
+                  aria-label="Buka menu mobile"
+                  aria-expanded="false"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-48 p-2" align="end" side="bottom">
-                <div className="space-y-1">
+              <PopoverContent className="w-56 p-2" align="end" side="bottom" role="menu">
+                <div className="gap-1">
                   {Object.entries(cardInfo).map(([key, cardType]) => (
                     <Button
                       key={key}
                       variant={currentCardType === key ? "default" : "ghost"}
                       size="sm"
                       onClick={() => handleCardTypeChange(key as CardType)}
-                      className={`w-full justify-start ${
-                        currentCardType === key
+                      className={cn("w-full justify-start transition-all duration-200", currentCardType === key
                           ? cardType.color
                           : "hover:bg-gray-100"
-                      } transition-all duration-200`}
+                        )}
+                      role="menuitem"
+                      aria-current={currentCardType === key ? "page" : undefined}
+                      aria-label={`Buka kategori ${cardType.name}`}
                     >
                       {cardType.name}
                     </Button>

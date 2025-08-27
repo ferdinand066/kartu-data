@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Badge } from './ui/badge'
 import cardInfo from '../data/card-info'
 import type { CardType } from '../types/card'
+import { cn } from '@/lib/utils'
 
 interface CardDisplayProps {
   selectedCardType: CardType
@@ -25,7 +26,7 @@ const getCardContent = (type: string) => {
 export function CardDisplay({ selectedCardType }: CardDisplayProps) {
   return (
     <div className="w-full max-w-md">
-      <Card className={`overflow-hidden border-0 shadow-2xl card-hover ${cardInfo[selectedCardType].color}`}>
+      <Card className={cn("overflow-hidden border-0 shadow-2xl card-hover", cardInfo[selectedCardType].color)}>
         <CardHeader className="text-center pb-4">
           <div className="flex justify-center mb-4">
             <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
@@ -45,7 +46,7 @@ export function CardDisplay({ selectedCardType }: CardDisplayProps) {
         </CardHeader>
 
         <CardContent className="pt-0">
-          <div className="flex justify-center space-x-2">
+          <div className="flex justify-center gap-2">
             <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
               {selectedCardType}
             </Badge>

@@ -1,0 +1,25 @@
+{
+  "name": "Kartu Data - Kartu Percakapan untuk Setiap Momen",
+  "short_name": "Kartu Data",
+  "description": "Temukan kartu percakapan yang sempurna untuk setiap situasi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#6b7280",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "social", "entertainment"],
+  "lang": "id",
+  "dir": "ltr"
+}
